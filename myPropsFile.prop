@@ -44,7 +44,7 @@
 # - print extra debugging information:
 # verbose = false
 # - print intermediate results:
-verboseResults = false
+verboseResults = true
 ######### parameters for tag and test operations #########
 
 # Class to use for tokenization. Default blank value means Penn Treebank
@@ -87,7 +87,7 @@ verboseResults = false
 # These keywords determines the features extracted.  'generic' is language independent.
 # distsim: Distributional similarity classes can be an added source of information
 # about your words. An English distsim file is included, or you can use your own.
-arch = bidirectional
+arch = left3words
 
 # 'wordFunction'.  A function applied to the text before training or tagging.
 # For example, edu.stanford.nlp.util.LowercaseFunction

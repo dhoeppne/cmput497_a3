@@ -1,6 +1,6 @@
-## tagger training invoked at Fri Oct 25 16:57:39 MDT 2019 with arguments:
+## tagger training invoked at Fri Oct 25 17:37:50 MDT 2019 with arguments:
                    model = st_ELLTrain.tagger
-                    arch = bidirectional
+                    arch = left3words
             wordFunction = 
                trainFile = ./A3DataCleaned/ELLTrain.txt
          closedClassTags = 
@@ -26,7 +26,7 @@ rareWordMinFeatureThresh = 10
         tokenizerFactory = 
         tokenizerOptions = 
                  verbose = false
-          verboseResults = false
+          verboseResults = true
     veryCommonWordThresh = 250
                 xmlInput = 
               outputFile = 

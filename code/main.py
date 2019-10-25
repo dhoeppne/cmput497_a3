@@ -2,7 +2,6 @@
 import sys, os, re
 from tempfile import mkstemp
 from shutil import move
-import subprocess
 from os import fdopen, remove
 # import my files
 from models import HMM, Brill, StanfordModel
@@ -44,12 +43,6 @@ def testDirectory(model, files):
     return output
 
 def main(mode, directory):
-    precheck = os.listdir(".")
-    for file in precheck:
-        if "st_temp_" in file:
-            bash_script = "rm -rf " + file
-            process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
-            output, error = process.communicate()
 
     preFiles = os.listdir(directory)
     files = []
@@ -79,22 +72,11 @@ def main(mode, directory):
                 model = StanfordModel(fileName, os.path.join(directory, file))
                 model.train()
 
-                fileList = []
                 directoriedFiles = []
                 for f in files:
                     directoriedFiles.append(os.path.join(directory, f))
 
-                    if "Test" in f:
-                        fileList.append(f)
-
-                results = testDirectory(model, directoriedFiles)
-                i = 0
-                for result in results:
-                    fname = "st_temp_" + fileList[i]
-                    f = open(fname, "wb+")
-                    f.write(result)
-                    f.close()
-                    i += 1
+                testDirectory(model, directoriedFiles)
 
             elif mode == "--nltk":
                 tagList = prepareNLTK(os.path.join(directory, file))
