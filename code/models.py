@@ -33,3 +33,9 @@ class StanfordModel(object):
         process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
 
+    def test(self, testFile):
+        bash_script = "java -classpath stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -prop ./myPropsFile.prop -model "
+        bash_script += self.fileName + " -testFile " + testFile
+
+        process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()

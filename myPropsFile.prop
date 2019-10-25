@@ -23,7 +23,7 @@
 
 # Path to outputFile to write tagged output to.
 # If empty, stdout is used.
-outputFile = ./st-temp.txt
+outputFile = st-temp.txt
 
 # Output format. One of: slashTags (default), xml, or tsv
 # outputFormat = slashTags

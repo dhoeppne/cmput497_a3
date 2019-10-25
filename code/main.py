@@ -19,8 +19,10 @@ def replace(file_path, pattern, subst):
     move(abs_path, file_path)
 
 def main(mode, directory):
-    # prep file
+    # prep files
     replace(directory, " ", "/")
+    testDirectory = re.sub("Train", "Test", directory)
+    replace(testDirectory, " ", "/")
 
     #try to create extraction directory, remove it if it exists
     if mode == "--stanford":
@@ -38,6 +40,7 @@ def main(mode, directory):
     results = open(fileName, "w+")
 
     model.train()
+    model.test(testDirectory)
 
 if __name__ == '__main__':
     #check command line arguments

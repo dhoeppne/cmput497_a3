@@ -1,8 +1,8 @@
-## tagger training invoked at Thu Oct 24 23:31:10 MDT 2019 with arguments:
-                   model = Stanford1.txt
+## tagger training invoked at Thu Oct 24 23:46:09 MDT 2019 with arguments:
+                   model = Stanford2.tagger
                     arch = bidirectional
             wordFunction = 
-               trainFile = ./A3DataCleaned/Domain1Train.txt
+               trainFile = ./A3DataCleaned/Domain2Train.txt
          closedClassTags = 
  closedClassTagThreshold = 40
  curWordMinFeatureThresh = 2
@@ -29,7 +29,7 @@ rareWordMinFeatureThresh = 10
           verboseResults = true
     veryCommonWordThresh = 250
                 xmlInput = 
-              outputFile = ./st-temp.txt
+              outputFile = st-temp.txt
             outputFormat = slashTags
      outputFormatOptions = 
                 nthreads = 1
