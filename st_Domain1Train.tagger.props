@@ -1,5 +1,5 @@
-## tagger training invoked at Fri Oct 25 14:22:02 MDT 2019 with arguments:
-                   model = Stanford1.tagger
+## tagger training invoked at Fri Oct 25 16:18:12 MDT 2019 with arguments:
+                   model = st_Domain1Train.tagger
                     arch = bidirectional
             wordFunction = 
                trainFile = ./A3DataCleaned/Domain1Train.txt
@@ -29,7 +29,7 @@ rareWordMinFeatureThresh = 10
           verboseResults = true
     veryCommonWordThresh = 250
                 xmlInput = 
-              outputFile = st-temp.txt
+              outputFile = 
             outputFormat = slashTags
      outputFormatOptions = 
                 nthreads = 1

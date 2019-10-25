@@ -24,52 +24,94 @@ def prepareNLTK(directory):
     with open(directory, "r") as file:
         for line in file:
             split = line.split(" ")
+
             if len(split) > 1:
                 sentenceList.append((split[0], split[1][:-1])) # delete new line characters
             else:
                 tagList.append(sentenceList)
-                sentenceList.clear()
+                sentenceList = []
 
     return tagList
 
+def testDirectory(model, files):
+    acc = []
+    for testFile in files:
+        acc.append(model.test(testFile))
+
+    return acc
+
 def main(mode, directory):
-    if mode == "--stanford":
-        # prep files
-        replace(directory, " ", "/")
-        testDirectory = re.sub("Train", "Test", directory)
-        replace(testDirectory, " ", "/")
-        fileName = "Stanford1.tagger" if "Domain1" in directory else "Stanford2.tagger"
-        model = StanfordModel(fileName, directory)
-        model.train()
-        model.test(testDirectory)
-        results = open(fileName, "w+")
+    preFiles = os.listdir(directory)
+    files = []
+    for file in preFiles:
+        if ".txt" in file:
+            files.append(file)
 
-    elif mode == "--nltk":
-        # prep files
-        replace(directory, "/", " ")
-        testDirectory = re.sub("Train", "Test", directory)
-        replace(testDirectory, "/", " ")
+    try:
+        remove("./results.txt")
+        f = open("results.txt", "w+")
+        f.close()
+    except:
+        print("Could not create results file")
 
-        tagList = prepareNLTK(directory)
-        testList = prepareNLTK(testDirectory)
+    for file in files:
+        for wrong in files:
+            # prep file based on mode
+            if mode == "--stanford":
+                replace(os.path.join(directory, wrong), " ", "/")
+            elif mode == "--nltk":
+                replace(os.path.join(directory, wrong), "/", " ")
 
-        fileName = "nltk1.txt" if "Domain1" in directory else "nltk2.txt"
+        if "Train" in file:
+            if mode == "--stanford":
 
-        modelHMM = HMM(text=tagList, directory=directory, testText=testList)
-        trainedHMM = modelHMM.train()
-        modelBrill = Brill(text=tagList, directory=directory, testText=testList, tagger=trainedHMM)
-        modelBrill.train()
+                fileName = "st_" + file.split(".")[0] + ".tagger"
+                model = StanfordModel(fileName, os.path.join(directory, file))
+                model.train()
 
-        hmmAcc = modelHMM.test()
-        brillAcc = modelBrill.test()
+                testDirectory(model, files)
 
-        with open(fileName, "w+") as file:
-            file.write("HMM accuracy: " + str(hmmAcc) + "\n")
-            file.write("Brill accuracy: " + str(brillAcc) + "\n")
+            elif mode == "--nltk":
+                tagList = prepareNLTK(os.path.join(directory, file))
 
+                fileName = "nltk1.txt" if "Domain1" in directory else "nltk2.txt"
 
-    else:
-        print("Incorrect usage: mode must be either --stanford or --nltk")
+                modelHMM = HMM(directory=directory)
+                trainedHMM = modelHMM.train(text=tagList)
+                modelBrill = Brill(directory=directory, tagger=trainedHMM)
+                modelBrill.train(text=tagList)
+
+                testList = []
+                fileList = []
+                for testFile in files:
+                    if "Test" in testFile:
+                        testList.append(prepareNLTK(os.path.join(directory, testFile)))
+                        fileList.append(testFile)
+
+                hmmAcc = testDirectory(modelHMM, testList)
+                brillAcc = testDirectory(modelBrill, testList)
+
+                with open("results.txt", "a") as results:
+                    i = 0
+                    for acc in hmmAcc:
+                        tagger = "Tagger: HMM   | "
+                        testFile = fileList[i]
+                        a = str(acc)
+                        write = tagger + "Trained on: " + file + " | Tested on: " + testFile + " | Accuracy: " + a
+                        results.write(write + "\n")
+                        i += 1
+
+                    i = 0
+                    for acc in brillAcc:
+                        tagger = "Tagger: Brill | "
+                        testFile = fileList[i]
+                        a = str(acc)
+                        write = tagger + "Trained on: " + file + " | Tested on: " + testFile + " | Accuracy: " + a
+                        results.write(write + "\n")
+                        i += 1
+
+            else:
+                print("Incorrect usage: mode must be either --stanford or --nltk")
 
 
 
@@ -78,4 +120,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 3:
         main(*sys.argv[1:])
     else:
-        print("Usage: ./main.py <--stanford or --nltk> <.txt file to model>\n")
+        print("Usage: ./main.py <--stanford or --nltk> <directory to model>\n")

@@ -5,21 +5,19 @@ from nltk.tag.brill_trainer import BrillTaggerTrainer
 from nltk.tag import brill
 class NltkModel(object):
     def __init__(self, **kwargs):
-        self.text = kwargs["text"]
         self.directory = kwargs["directory"]
-        self.testText = kwargs["testText"]
 
 class HMM(NltkModel):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.hmm = HiddenMarkovModelTagger
 
-    def train(self):
-        self.hmmTrained = self.hmm.train(self.text)
+    def train(self, text):
+        self.hmmTrained = self.hmm.train(text)
         return self.hmmTrained
 
-    def test(self):
-        acc = self.hmmTrained.evaluate(self.testText)
+    def test(self, testText):
+        acc = self.hmmTrained.evaluate(testText)
         return acc
 
 class Brill(NltkModel):
@@ -49,11 +47,11 @@ class Brill(NltkModel):
             ]
 
         self.brillTrainer = BrillTaggerTrainer(self.tagger, templates, deterministic=True)
-    def train(self):
-        self.trainedBrill = self.brillTrainer.train(self.text)
+    def train(self, text):
+        self.trainedBrill = self.brillTrainer.train(text)
 
-    def test(self):
-        acc = self.trainedBrill.evaluate(self.testText)
+    def test(self, testText):
+        acc = self.trainedBrill.evaluate(testText)
         return acc
 
 class StanfordModel(object):
@@ -62,10 +60,10 @@ class StanfordModel(object):
         self.directory = directory
 
         try:
-            remove("./st-temp.txt")
+            remove("./st_results.txt")
         except:
             print("File does not exist, continuing as normal")
-        file = open("./st-temp.txt", "w")
+        file = open("./st_results.txt", "w")
         file.close()
 
     def train(self):
@@ -78,8 +76,11 @@ class StanfordModel(object):
         output, error = process.communicate()
 
     def test(self, testFile):
-        bash_script = "java -classpath stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -prop ./myPropsFile.prop -model "
-        bash_script += self.fileName + " -testFile " + testFile
+        if "Test" in testFile:
+            bash_script = "java -classpath stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -prop ./myPropsFile.prop -model "
+            bash_script += self.fileName + " -testFile " + testFile + " > ./st_results.txt"
 
-        process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+            process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
+            output, error = process.communicate()
+
+            return 0

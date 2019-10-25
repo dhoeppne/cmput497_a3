@@ -1,2 +1,0 @@
-HMM accuracy: 0.42424242424242425
-Brill accuracy: 0.42424242424242425
