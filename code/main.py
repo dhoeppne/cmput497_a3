@@ -18,33 +18,64 @@ def replace(file_path, pattern, subst):
     #Move new file
     move(abs_path, file_path)
 
-def main(mode, directory):
-    # prep files
-    replace(directory, " ", "/")
-    testDirectory = re.sub("Train", "Test", directory)
-    replace(testDirectory, " ", "/")
+def prepareNLTK(directory):
+    tagList = []
+    sentenceList = []
+    with open(directory, "r") as file:
+        for line in file:
+            split = line.split(" ")
+            if len(split) > 1:
+                sentenceList.append((split[0], split[1][:-1])) # delete new line characters
+            else:
+                tagList.append(sentenceList)
+                sentenceList.clear()
 
-    #try to create extraction directory, remove it if it exists
+    return tagList
+
+def main(mode, directory):
     if mode == "--stanford":
+        # prep files
+        replace(directory, " ", "/")
+        testDirectory = re.sub("Train", "Test", directory)
+        replace(testDirectory, " ", "/")
         fileName = "Stanford1.tagger" if "Domain1" in directory else "Stanford2.tagger"
         model = StanfordModel(fileName, directory)
-    elif mode == "--nltkHMM":
-        model = HMM(fileName, directory)
-        fileName = "HMM1.txt" if "Domain1" in directory else "HMM2.txt"
-    elif mode == "--nltkBrill":
-        model = Brill(fileName, directory)
-        fileName = "Brill1.txt" if "Domain1" in directory else "Brill.txt"
+        model.train()
+        model.test(testDirectory)
+        results = open(fileName, "w+")
+
+    elif mode == "--nltk":
+        # prep files
+        replace(directory, "/", " ")
+        testDirectory = re.sub("Train", "Test", directory)
+        replace(testDirectory, "/", " ")
+
+        tagList = prepareNLTK(directory)
+        testList = prepareNLTK(testDirectory)
+
+        fileName = "nltk1.txt" if "Domain1" in directory else "nltk2.txt"
+
+        modelHMM = HMM(text=tagList, directory=directory, testText=testList)
+        trainedHMM = modelHMM.train()
+        modelBrill = Brill(text=tagList, directory=directory, testText=testList, tagger=trainedHMM)
+        modelBrill.train()
+
+        hmmAcc = modelHMM.test()
+        brillAcc = modelBrill.test()
+
+        with open(fileName, "w+") as file:
+            file.write("HMM accuracy: " + str(hmmAcc) + "\n")
+            file.write("Brill accuracy: " + str(brillAcc) + "\n")
+
+
     else:
-        print("Incorrect usage: mode must be either --stanford or --nltkHMM or --nltkBrill")
+        print("Incorrect usage: mode must be either --stanford or --nltk")
 
-    results = open(fileName, "w+")
 
-    model.train()
-    model.test(testDirectory)
 
 if __name__ == '__main__':
     #check command line arguments
     if len(sys.argv) == 3:
         main(*sys.argv[1:])
     else:
-        print("Usage: ./main.py <--stanford or --nltkHMM or --nltkBrill> <.txt file to model>\n")
+        print("Usage: ./main.py <--stanford or --nltk> <.txt file to model>\n")
