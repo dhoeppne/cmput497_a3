@@ -59,13 +59,6 @@ class StanfordModel(object):
         self.fileName = fileName
         self.directory = directory
 
-        try:
-            remove("./st_results.txt")
-        except:
-            print("File does not exist, continuing as normal")
-        file = open("./st_results.txt", "w")
-        file.close()
-
     def train(self):
         bash_script = "java -classpath stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -prop ./myPropsFile.prop -model "
         bash_script += self.fileName
@@ -78,9 +71,9 @@ class StanfordModel(object):
     def test(self, testFile):
         if "Test" in testFile:
             bash_script = "java -classpath stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -prop ./myPropsFile.prop -model "
-            bash_script += self.fileName + " -testFile " + testFile + " > ./st_results.txt"
+            bash_script += self.fileName + " -testFile " + testFile
 
             process = subprocess.Popen(bash_script.split(), stdout=subprocess.PIPE)
             output, error = process.communicate()
 
-            return 0
+            return output

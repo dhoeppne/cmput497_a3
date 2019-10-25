@@ -1,4 +1,4 @@
-## tagger training invoked at Fri Oct 25 16:18:12 MDT 2019 with arguments:
+## tagger training invoked at Fri Oct 25 16:57:10 MDT 2019 with arguments:
                    model = st_Domain1Train.tagger
                     arch = bidirectional
             wordFunction = 
@@ -26,7 +26,7 @@ rareWordMinFeatureThresh = 10
         tokenizerFactory = 
         tokenizerOptions = 
                  verbose = false
-          verboseResults = true
+          verboseResults = false
     veryCommonWordThresh = 250
                 xmlInput = 
               outputFile = 

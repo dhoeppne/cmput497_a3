@@ -44,7 +44,7 @@
 # - print extra debugging information:
 # verbose = false
 # - print intermediate results:
-# verboseResults = true
+verboseResults = false
 ######### parameters for tag and test operations #########
 
 # Class to use for tokenization. Default blank value means Penn Treebank
