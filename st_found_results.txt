@@ -1,0 +1,48 @@
+Model st_ELLTrain.tagger has xSize=12207, ySize=46, and numFeatures=471.
+    Domain1Test
+        Results on 12851 sentences and 12382 words, of which 2638 were unknown.
+        Total sentences right: 6507 (50.634192%); wrong: 6344 (49.365808%).
+        Total tags right: 6038 (48.764335%); wrong: 6344 (51.235665%).
+        Unknown words right: 660 (25.018954%); wrong: 1978 (74.981046%).
+    Domain2Test
+        Results on 7626 sentences and 7083 words, of which 1579 were unknown.
+        Total sentences right: 4184 (54.864936%); wrong: 3442 (45.135064%).
+        Total tags right: 3641 (51.404772%); wrong: 3442 (48.595228%).
+        Unknown words right: 431 (27.295757%); wrong: 1148 (72.704243%).
+    ELLTest
+        Results on 10091 sentences and 9591 words, of which 351 were unknown.
+        Total sentences right: 5314 (52.660787%); wrong: 4777 (47.339213%).
+        Total tags right: 4814 (50.192889%); wrong: 4777 (49.807111%).
+        Unknown words right: 104 (29.629630%); wrong: 247 (70.370370%).
+Model st_Domain2Train.tagger has xSize=12904, ySize=47, and numFeatures=312.
+    Domain1Test
+        Results on 12851 sentences and 12382 words, of which 2667 were unknown.
+        Total sentences right: 9730 (75.713952%); wrong: 3121 (24.286048%).
+        Total tags right: 9261 (74.794056%); wrong: 3121 (25.205944%).
+        Unknown words right: 697 (26.134233%); wrong: 1970 (73.865767%).
+    Domain2Test
+        Results on 7626 sentences and 7083 words, of which 1003 were unknown.
+        Total sentences right: 6171 (80.920535%); wrong: 1455 (19.079465%).
+        Total tags right: 5628 (79.457857%); wrong: 1455 (20.542143%).
+        Unknown words right: 259 (25.822532%); wrong: 744 (74.177468%).
+    ELLTest
+        Results on 10091 sentences and 9591 words, of which 1291 were unknown.
+        Total sentences right: 7826 (77.554256%); wrong: 2265 (22.445744%).
+        Total tags right: 7326 (76.384110%); wrong: 2265 (23.615890%).
+        Unknown words right: 424 (32.842758%); wrong: 867 (67.157242%).
+Model st_Domain1Train.tagger has xSize=15282, ySize=43, and numFeatures=302.
+    Domain1Test
+        Results on 12851 sentences and 12382 words, of which 1755 were unknown.
+        Total sentences right: 10131 (78.834332%); wrong: 2720 (21.165668%).
+        Total tags right: 9662 (78.032628%); wrong: 2720 (21.967372%).
+        Unknown words right: 432 (24.615385%); wrong: 1323 (75.384615%).
+    Domain2Test
+        Results on 7626 sentences and 7083 words, of which 1344 were unknown.
+        Total sentences right: 5957 (78.114346%); wrong: 1669 (21.885654%).
+        Total tags right: 5414 (76.436538%); wrong: 1669 (23.563462%).
+        Unknown words right: 394 (29.315476%); wrong: 950 (70.684524%).
+    ELLTest
+        Results on 10091 sentences and 9591 words, of which 1164 were unknown.
+        Total sentences right: 7392 (73.253394%); wrong: 2699 (26.746606%).
+        Total tags right: 6892 (71.859035%); wrong: 2699 (28.140965%).
+        Unknown words right: 358 (30.756014%); wrong: 806 (69.243986%).
