@@ -1,0 +1,12 @@
+Tagger: HMM   | Trained on: Domain1Train.txt | Tested on: Domain1Test.txt | Accuracy: 0.8484087780387076
+Tagger: HMM   | Trained on: Domain1Train.txt | Tested on: Domain2Test.txt | Accuracy: 0.8074199943358822
+Tagger: HMM   | Trained on: Domain1Train.txt | Tested on: ELLTest.txt | Accuracy: 0.8340110520279429
+Tagger: Brill | Trained on: Domain1Train.txt | Tested on: Domain1Test.txt | Accuracy: 0.8512430156287959
+Tagger: Brill | Trained on: Domain1Train.txt | Tested on: Domain2Test.txt | Accuracy: 0.813792126876239
+Tagger: Brill | Trained on: Domain1Train.txt | Tested on: ELLTest.txt | Accuracy: 0.8365133979772703
+Tagger: HMM   | Trained on: Domain2Train.txt | Tested on: Domain1Test.txt | Accuracy: 0.7979593489351364
+Tagger: HMM   | Trained on: Domain2Train.txt | Tested on: Domain2Test.txt | Accuracy: 0.8558482016425941
+Tagger: HMM   | Trained on: Domain2Train.txt | Tested on: ELLTest.txt | Accuracy: 0.8280679803982901
+Tagger: Brill | Trained on: Domain2Train.txt | Tested on: Domain1Test.txt | Accuracy: 0.8007935865252247
+Tagger: Brill | Trained on: Domain2Train.txt | Tested on: Domain2Test.txt | Accuracy: 0.8598130841121495
+Tagger: Brill | Trained on: Domain2Train.txt | Tested on: ELLTest.txt | Accuracy: 0.830049004274841

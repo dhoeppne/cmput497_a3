@@ -1,0 +1,243 @@
+%
+% File report.tex
+%
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl2017}
+\usepackage{times}
+\usepackage{latexsym}
+
+\usepackage{url}
+
+\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{CMPUT 497 Assignment 3: PoS Tagging}
+
+\author{David Hoeppner\\
+  {\tt dhoeppne@ualberta.ca} \\
+  }
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  This assignment had me create 3 models trained on 3 sets each. The
+  sets were two native English documents, and one English Language
+  Learner document. In order to evaluate the documents, the Stanford
+  PoS tagger was used, and the NLTK HMM and NLTK Brill tagger were
+  used. Then, error analysis and comparisons were done between the
+  results and accuracies of the different taggers.
+\end{abstract}
+
+\section{Credits}
+
+The sources consulted for this assignment can be found in the README
+file.
+
+\section{Part of Speech Tagging}
+\subsection{Stanford Tagger}
+
+The Stanford was quite good at tagging when trained on the Domain1
+and Domain2 files. It consistently achieved greater than 70\% across
+the tested files when trained on Domain1 and Domain2, sometimes getting
+above 80\%.
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Tags Right & \bf UNKs Right \\ \hline
+  Domain1 & 78.0\% & 24.6\% \\
+  Domain2 & 76.4\% & 29.3\% \\
+  ELL  & 71.9\% & 30.8\% \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d1St-table} Domain1 Stanford Tagger Results. }
+\end{table}
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Tags Right & \bf UNKs Words Right \\ \hline
+  Domain1 & 74.8\% & 26.1\% \\
+  Domain2 & 79.5\% & 25.8\% \\
+  ELL  & 76.4\% & 32.8\% \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d2St-table} Domain2 Stanford Tagger Results. }
+\end{table}
+
+The Stanford tagger was trained using the English language rules, rather
+than generic. This meant that it could quickly train and test the models.
+In addition to this, the choice was made to run the jar from the
+command line, in order to make the tagger run with little intervention
+from me. This led to a little manual data collection, but it was easier
+than trying to get it to run outside of this fact. The failures of these
+models seem to be largely in part minor mis-tags. For instance, rather than
+classifying American as a proper noun, the tagger assigns it the noun tag.
+Where the Stanford tagger seems to miss quite a bit of tags is when it
+is trained on the ELL set. Here, it fails to get above 55\%, and does not
+recognize unknown words very well.
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Tags Right & \bf UNKs Right \\ \hline
+  Domain1 & 48.8\% & 25.0\% \\
+  Domain2 & 51.4\% & 27.3\% \\
+  ELL  & 50.2\% & 29.6\% \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{ellSt-table} ELL Stanford Tagger Results. }
+\end{table}
+
+I believe this is because of the many misspelled words in the ELL corpus.
+Because of this, the tagger fails to make heads or tails of what the
+word could possibly be tagged as, and makes a guess that is usually wrong.
+As the tagger is trained on English, it fails to recognize words that
+do not quite fit into the English language; it has a low fault tolerance
+for misspellings.
+
+\subsection{HMM Tagger}
+
+The HMM tagger, on average, performed better than the Stanford Tagger.
+It regularly achieves an accuracy of above 80\%, and on one occassion
+achieves a 92\%. This tagger also managed the ELL corpus' much better.
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy \\ \hline
+  Domain1 & 84.8\% \\
+  Domain2 & 80.7\%  \\
+  ELL  & 83.4\%  \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d1HMM-table} Domain1 HMM Tagger Results. }
+\end{table}
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy \\ \hline
+  Domain1 & 79.8\% \\
+  Domain2 & 85.6\%  \\
+  ELL  & 82.8\%  \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d2HMM-table} Domain2 HMM Tagger Results. }
+\end{table}
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy \\ \hline
+  Domain1 & 76.7\% \\
+  Domain2 & 76.8\%  \\
+  ELL  & 92.2\%  \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{ellHMM-table} ELL HMM Tagger Results. }
+\end{table}
+
+As you can see, the HMM tagger performs best when testing on the corpus it was
+trained on, which was not always the case for the Stanford tagger.
+
+\subsection{Brill Tagger}
+
+The Brill tagger is a PoS tagging tool that takes another model that has been
+trained and builds rules to hopefully do a better job of tagging than the model
+it was supplied. Overall for me, this was marginally true at best. The Brill tagger
+did technically do a better job, but it took longer than the HMM and Stanford
+taggers, while only delivering results that were slightly improved. This is clearly
+seen in the Brill Tables below.
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy & \bf HMM Accuracy \\ \hline
+  Domain1 & 85.1\% & 84.8\% \\
+  Domain2 & 81.3\% & 80.7\% \\
+  ELL  & 83.7\% & 83.4\%  \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d1Br-table} Domain1 Brill Tagger Results. }
+\end{table}
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy & \bf HMM Accuracy \\ \hline
+  Domain1 & 80.1\% & 79.8\% \\
+  Domain2 & 86.0\% & 85.6\%  \\
+  ELL  & 83.0\% & 82.8\%  \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{d2Br-table} Domain2 Brill Tagger Results. }
+\end{table}
+
+\begin{table}[h]
+  \begin{center}
+  \begin{tabular}{|l|rl|}
+  \hline \bf Test File & \bf Accuracy & \bf HMM Accuracy \\ \hline
+  Domain1 & 77.0\% & 76.7\% \\
+  Domain2 & 77.1\% & 76.8\%  \\
+  ELL  & 92.7\% & 92.2\% \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{\label{ellBr-table} ELL Brill Tagger Results. }
+\end{table}
+
+As you can see, the Brill tagger is only on average a third of a
+percentage point higher than its HMM equivalent. This makes the Brill
+significantly slower than the HMM, as it not only has to train itself,
+it also relies on a trained HMM model to train off of.
+
+\section{Learner English}
+All three taggers generally performed worse on the English Language Learner
+corpus', with the exception of the NLTK taggers trained on the
+ELL corpus. As discussed early, this is likely do to the misspellings
+of different words, and in some cases the incorrect usage of homonyms
+(for instance, using the wrong their, there, or they're). The Stanford
+tagger especially fails to grasp the "Non-Standard" English of the corpus.
+I used the English default for the tagger rather than the generic one,
+and this has likely led to the abysmal score.
+
+\section{Conclusion}
+
+Clearly, the HMM tagger was the most efficient and most accurate tagger. With
+very little tuning, the HMM tagger was up and running very quickly, and produced
+the best results with very little interaction on my part to achieve the high results.
+Technically the Brill performed better, but the added computation cost
+makes the HMM tagger the superior tool. In addition to this, the ability
+of this tagger to more accurately tag the ELL corpus makes it a preferable
+tool to the Stanford tagger. In addition to this, the difficulties with
+dealing with non-Standard English corpus' is evident in this assignment, as each
+tagger struggled more so with the ELL corpus' over the Standard English ones.
+
+\end{document}
